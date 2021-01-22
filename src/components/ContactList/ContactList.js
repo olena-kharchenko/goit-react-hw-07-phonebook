@@ -9,6 +9,7 @@ export default function ContactList() {
   const contacts = useSelector(getVisibleContacts);
   const dispatch = useDispatch();
   const onDeleteContact = id => dispatch(phonebookOperations.deleteContact(id));
+
   return (
     <ul className={s.list}>
       {contacts.map(({ id, name, number }) => (

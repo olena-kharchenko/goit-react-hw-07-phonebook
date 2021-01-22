@@ -8,16 +8,13 @@ import {
   deleteContactSuccess,
   deleteContactError,
   changeFilter,
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
 } from './phonebook-actions';
 
-const initialContacts = [
-  { id: 'id-1', name: 'Elon Mask', number: '10664888778' },
-  { id: 'id-2', name: 'Lena Kharchenko', number: '380664969795' },
-  { id: 'id-3', name: 'Bill Gates', number: '10662475771' },
-  { id: 'id-4', name: 'Mark Zuckerberg ', number: '10625884318' },
-];
-
-const items = createReducer(initialContacts, {
+const items = createReducer([], {
+  [fetchContactsSuccess]: (state, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => [payload, ...state],
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
@@ -28,6 +25,9 @@ const filter = createReducer('', {
 });
 
 const loading = createReducer(false, {
+  [fetchContactsRequest]: () => true,
+  [fetchContactsSuccess]: () => false,
+  [fetchContactsError]: () => false,
   [addContactRequest]: () => true,
   [addContactSuccess]: () => false,
   [addContactError]: () => false,

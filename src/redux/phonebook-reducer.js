@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import { addContact, deleteContact, changeFilter } from './phonebook-actions';
-// import types from './phonebook-types';
+import {
+  addContactRequest,
+  addContactSuccess,
+  addContactError,
+  deleteContactRequest,
+  deleteContactSuccess,
+  deleteContactError,
+  changeFilter,
+} from './phonebook-actions';
 
 const initialContacts = [
   { id: 'id-1', name: 'Elon Mask', number: '10664888778' },
@@ -10,10 +17,9 @@ const initialContacts = [
   { id: 'id-4', name: 'Mark Zuckerberg ', number: '10625884318' },
 ];
 
-//*** Step 2 ***
 const items = createReducer(initialContacts, {
-  [addContact]: (state, { payload }) => [payload, ...state],
-  [deleteContact]: (state, { payload }) =>
+  [addContactSuccess]: (state, { payload }) => [payload, ...state],
+  [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
 
@@ -21,34 +27,17 @@ const filter = createReducer('', {
   [changeFilter]: (state, { payload }) => payload,
 });
 
-//*** Step 1 ***
-// const items = (state = initialContacts, { type, payload }) => {
-//   switch (type) {
-//     case types.ADD:
-//       return [payload, ...state];
-
-//     case types.DELETE:
-//       return state.filter(({ id }) => id !== payload);
-
-//     case types.OVERWRITE:
-//       return [...payload];
-
-//     default:
-//       return state;
-//   }
-// };
-
-// const filter = (state = '', { type, payload }) => {
-//   switch (type) {
-//     case types.CHANGE_FILTER:
-//       return payload;
-
-//     default:
-//       return state;
-//   }
-// };
+const loading = createReducer(false, {
+  [addContactRequest]: () => true,
+  [addContactSuccess]: () => false,
+  [addContactError]: () => false,
+  [deleteContactRequest]: () => true,
+  [deleteContactSuccess]: () => false,
+  [deleteContactError]: () => false,
+});
 
 export default combineReducers({
   items,
   filter,
+  loading,
 });

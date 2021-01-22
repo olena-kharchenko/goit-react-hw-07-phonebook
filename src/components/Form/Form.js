@@ -5,7 +5,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 // import PropTypes from 'prop-types';
 import { getContacts } from '../../redux/phonebook-selectors';
-import * as phonebookActions from '../../redux/phonebook-actions';
+import * as phonebookOperations from '../../redux/phonebook-operations';
 import s from './Form.module.css';
 
 export default function MyForm() {
@@ -13,7 +13,7 @@ export default function MyForm() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
   const onSubmit = (name, number) =>
-    dispatch(phonebookActions.addContact(name, number));
+    dispatch(phonebookOperations.addContact(name, number));
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -85,26 +85,3 @@ export default function MyForm() {
     </form>
   );
 }
-
-// MyForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     }),
-//   ),
-// };
-
-//*** Step 1 ***
-// const mapStateToProps = state => ({
-//   contacts: state.contacts.items,
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   onSubmit: (name, number) =>
-//     dispatch(phonebookActions.addContact(name, number)),
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(MyForm);
